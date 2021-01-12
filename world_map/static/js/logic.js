@@ -37,15 +37,13 @@ for (const [key,value] of  Object.entries(era)){
 
 
 function showMap(){
-
+//Clear map
   var clearbody = document.getElementById("map_container");   
   while(clearbody.hasChildNodes())
   {
       clearbody.removeChild(clearbody.firstChild);
   };
-
   document.getElementById('map_container').innerHTML = "<div id='map'></div>";
-
 //set year to drop down base on era
 var attacks = sharky.shark_attacks;
 var era_years;
@@ -103,8 +101,9 @@ d3.json(link, function(data) {
   var geo2 = data;
   var geo = data.features;
  // console.log(geo2);
-arrayList = [], obj_c_processed = [];
-var counts = 0;
+  arrayList = [], obj_c_processed = [];
+  var counts = 0;
+  var totalcount =0;
 // Recreate geojson to merge the shark attacks json
 for (var i in geo) {
   var obj = {
@@ -125,6 +124,7 @@ for (var j in attacks) {
   }
   if (country_name == geo[i].properties.ADMIN.toLowerCase() && active_year_list.includes(attacks[j].year)) {
       obj.count = ++counts;
+      totalcount = ++totalcount;
       //console.log(counts);
       // obj.count = test[j].count;
       obj_c_processed[attacks[j].country] = true;
@@ -135,12 +135,36 @@ obj.count = obj.count || 0;
 arrayList.push(obj);
 var counts = 0;
 }
-
-
 var myGeoJSON = {};
 myGeoJSON.type = "FeatureCollection";
 myGeoJSON.features = arrayList;
-//console.log(myGeoJSON);
+//console.log(myGeoJSON.features[1].count);
+var show_attacks = []
+for (var o in myGeoJSON.features){
+  if (myGeoJSON.features[o].count != 0){
+    show_attacks.push(myGeoJSON.features[o].count+" cases in "+myGeoJSON.features[o].properties);
+  }
+}
+//console.log(show_attacks);
+var collator = new Intl.Collator(undefined, {numeric: true, sensitivity: 'base'});
+show_attacks.sort(collator.compare);
+show_attacks.reverse()
+show_attacks = show_attacks.slice(0,10)
+// clear the old data content to make room for the new searched content
+var clearbody2 = document.getElementById("sample-metadata");   
+while(clearbody2.hasChildNodes())
+{
+    clearbody2.removeChild(clearbody2.firstChild);
+};
+//Add total count of attacks 
+var demo_body = d3.select("#sample-metadata");
+for(var show in show_attacks){
+demo_body.append("p").text(show_attacks[show]);
+}
+
+
+
+
 //-----------------------------------------------
 
 
