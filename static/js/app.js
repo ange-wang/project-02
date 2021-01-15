@@ -27,31 +27,31 @@ function buildPlot() {
     var data = [trace1];
 
     var layout = {
-      title: "Area Under Forest for Different Countries",
+      title: "Attacks vs Moon Phase",
       margin: {
         l: 100,
         r: 100,
         t: 100,
         b: 100
       },
-      height: 400,
+      height: 600,
       width: 600
     };
 
     // console.log(data)
-    Plotly.plot("plot", data, layout);
+    Plotly.plot("pie", data, layout);
   });
 }
 
 function linePlot() {
 
   var layout = {
-    title: "Area Under Forest for Different Countries",
+    title: "Total Attacks",
     hovermode: 'closest',
     font: {
       family: 'Arial, sans-serif',
       size: 12,
-      color: 'white'
+      color: 'black'
     },
     margin: {
       l: 100,
@@ -59,7 +59,7 @@ function linePlot() {
       t: 100,
       b: 100
     },
-    height: 800,
+    height: 600,
     width: 1000,
     paper_bgcolor:'rgba(0,0,0,0)',
     plot_bgcolor:'rgba(0,0,0,0)',
