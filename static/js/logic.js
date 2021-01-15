@@ -1,5 +1,5 @@
 window.onload = showMap;
-var link = "assets/data/countries.geojson";
+var link = "../static/data/countries.geojson";
 var attacks = sharky.shark_attacks;
 console.log(attacks[0].year)
 var test = [
